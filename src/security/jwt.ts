@@ -1,9 +1,15 @@
 import * as jwt from 'jsonwebtoken';
+import * as dotenv from 'dotenv';
+import * as path from 'path';
 import * as moment from 'moment';
 import { User } from '../entity/User';
 import { v4 as uuidv4 } from 'uuid';
 import { RefreshToken } from '../entity/RefreshToken';
 import { Database } from '../database';
+
+dotenv.config({
+    path: path.resolve(process.cwd(), process.env.NODE_ENV === 'prod' ? '.env' : '.env.dev'),
+});
 
 export class JWT {
     private static JWT_SECRET = process.env.JWT_SECRET;
