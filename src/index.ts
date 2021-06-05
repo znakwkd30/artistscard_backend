@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
 import * as express from 'express';
+import * as morgan from 'morgan';
 import { Database } from './database';
 import { AppBuilder } from './appBuilder';
 import { AuthController } from './controller/authController';
@@ -20,6 +21,7 @@ Database.initialize();
 
 appBuilder
     .addMiddleware(express.json())
+    .addMiddleware(morgan('dev'))
     .addController(new AuthController())
     .addController(new UserController())
     .addMiddleware(errorMiddleware)
