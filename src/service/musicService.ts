@@ -4,6 +4,7 @@ import { Music } from '../entity/Music';
 
 export interface MusicService {
     addMusic(body: AddMusicDTO, file: Express.Multer.File);
+    searchMusic(title: string);
 }
 
 export class MusicServiceImpl implements MusicService {
@@ -18,5 +19,14 @@ export class MusicServiceImpl implements MusicService {
         await Database.musicRepository.save(music);
 
         return music;
+    }
+
+    public async searchMusic(title: string) {
+        const musics = await Database.musicRepository
+            .createQueryBuilder('music')
+            .where('title like :title', { title: `%${title}%` })
+            .getMany();
+
+        return musics;
     }
 }

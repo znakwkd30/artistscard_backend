@@ -14,6 +14,7 @@ export class MusicController extends BaseController {
 
     public initializeEndpoints() {
         this.addAsyncEndpoint('POST', '/music', this.addMusic, upload.single('file'));
+        this.addAsyncEndpoint('GET', '/music/search/:title', this.searchMusic);
     }
 
     public addMusic = async (req: Request, res: Response) => {
@@ -23,5 +24,13 @@ export class MusicController extends BaseController {
         const music = await this.musicService.addMusic(body, file);
 
         res.status(201).json(music);
+    };
+
+    public searchMusic = async (req: Request, res: Response) => {
+        const { title } = req.params;
+
+        const musics = await this.musicService.searchMusic(title);
+
+        res.json(musics);
     };
 }
