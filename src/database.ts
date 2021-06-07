@@ -1,10 +1,12 @@
 import { Connection, createConnection, ObjectType, Repository } from 'typeorm';
+import { Music } from './entity/Music';
 import { RefreshToken } from './entity/RefreshToken';
 import { User } from './entity/User';
 
 export class Database {
     public static connection: Connection;
     public static userRepository: Repository<User>;
+    public static musicRepository: Repository<Music>;
     public static refreshTokenRepository: Repository<RefreshToken>;
 
     public static async initialize() {
@@ -22,6 +24,7 @@ export class Database {
             subscribers: [process.env.DATABASE_SUBSCRIBERS],
         });
         this.userRepository = this.connection.getRepository(User);
+        this.musicRepository = this.connection.getRepository(Music);
         this.refreshTokenRepository = this.connection.getRepository(RefreshToken);
     }
 
