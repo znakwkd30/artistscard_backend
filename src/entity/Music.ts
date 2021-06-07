@@ -17,6 +17,9 @@ export class Music {
     @Column()
     artists: string;
 
+    @Column({ name: 'original_name' })
+    originalName: string;
+
     @Column()
     path: string;
 }
